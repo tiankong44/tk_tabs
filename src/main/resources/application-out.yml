@@ -1,45 +1,26 @@
 spring:
   datasource:
-    druid:
-      master:
-        # tcpRcvBuf/tcpSndBuf 缓冲区参数 rewriteBatchedStatements batchUpdate参数
-        url: jdbc:mysql://xy.tiankong44.vip:6001/tk_tabs?characterEncoding=utf8&verifyServerCertificate=false&useSSL=true&serverTimezone=Asia/Shanghai
-        username: root
-        password: zh34864486
-        # 开源 SQL 日志框架，在大多数情况下极大改善了可读性及调试工作
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        max-active: 10
-        max-wait: 600000
-        # sql监控
-        filters: stat
-        # 检测池里连接的可用性 开启影响性能 默认false
-        test-on-borrow: false
-        # 指明连接是否被空闲连接回收器(如果有)进行检验.如果检测失败,则连接将被从池中去除 默认true
-        test-while-idle: true
-        # 每30秒运行一次空闲连接回收器
-        time-between-eviction-runs-millis: 30000
-        # 检测语句
-        validation-query: "select 1"
-      slave:
-        # tcpRcvBuf/tcpSndBuf 缓冲区参数 rewriteBatchedStatements batchUpdate参数
-        url: jdbc:mysql://xy.tiankong44.vip:6002/tk_tabs?characterEncoding=utf8&verifyServerCertificate=false&useSSL=true&serverTimezone=Asia/Shanghai
-        username: root
-        password: zh34864486
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        max-active: 10
-        max-wait: 600000
-        # sql监控
-        filters: stat
-        # 检测池里连接的可用性 开启影响性能 默认false
-        test-on-borrow: false
-        # 指明连接是否被空闲连接回收器(如果有)进行检验.如果检测失败,则连接将被从池中去除 默认true
-        test-while-idle: true
-        # 每30秒运行一次空闲连接回收器
-        time-between-eviction-runs-millis: 30000
-        # 检测语句
-        validation-query: "select 1"
-
-
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    dynamic:
+      primary: master # 配置默认数据库
+      strict: false
+      datasource:
+        master:
+          # tcpRcvBuf/tcpSndBuf 缓冲区参数 rewriteBatchedStatements batchUpdate参数
+          url: jdbc:mysql://xy.tiankong44.vip:6001/tk_tabs?characterEncoding=utf8&verifyServerCertificate=false&useSSL=true&serverTimezone=Asia/Shanghai
+          username: root
+          password: zh34864486
+        slave:
+          # tcpRcvBuf/tcpSndBuf 缓冲区参数 rewriteBatchedStatements batchUpdate参数
+          url: jdbc:mysql://xy.tiankong44.vip:6002/tk_tabs?characterEncoding=utf8&verifyServerCertificate=false&useSSL=true&serverTimezone=Asia/Shanghai
+          username: root
+          password: zh34864486
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 20
+      idle-timeout: 10000
+      max-lifetime: 1800000
+      connection-timeout: 30000
   redis:
     #    cluster:
     #      nodes: 127.0.0.1:6379
