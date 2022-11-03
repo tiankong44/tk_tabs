@@ -24,7 +24,7 @@ public class getBingImageUtil {
     private static String mkt = "zh-CN"; // 地区
     private static String idx = "0";  //请求图片截止天数
     private static String n = "8";  //请求数量
-
+    private static String prefix = "https://cn.bing.com";  // 图片地址前缀
 
     public static List<Image> getImages() {
 
@@ -44,7 +44,7 @@ public class getBingImageUtil {
         for (Object o : array) {
             Image image = new Image();
             BingImage bingImage = JSONObject.toJavaObject((JSON) JSONObject.toJSON(o), BingImage.class);
-            image.setUrl("https://cn.bing.com" + bingImage.getUrl());
+            image.setUrl(prefix + bingImage.getUrl());
             content = bingImage.getCopyright();
             if (content.length() > 0) {
                 String addr = content.substring(0, content.indexOf("("));

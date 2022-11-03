@@ -40,7 +40,7 @@ public class TabController {
     }
 
     /**
-     * 新增数据
+     * 查询可见的标签栏
      *
      * @param Page 实体对象
      * @return 新增结果

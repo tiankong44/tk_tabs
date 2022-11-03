@@ -32,14 +32,14 @@ public class CommonServiceImpl implements CommonService {
     @Resource
     AppearanceMapper appearanceMapper;
 
+    private static String defaultImage = "https://cn.bing.com/th?id=OHR.BridgeofSighs_ZH-CN5414607871_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp";  // 图片地址前缀
+
 
     @Override
     public BaseRes getBackgroundImage() {
         Appearance appearance = appearanceMapper.selectById(1);
         if (appearance.getBackgroundMode() == 0) {
             String s = redisUtil.lLeftPop(imageKey);
-
-            // String s = redisUtil.get(imageKey);
             JSONArray array = JSONArray.parseArray(s);
             List<Image> images = new ArrayList<>();
             if (array == null || array.size() == 0) {
@@ -48,8 +48,9 @@ public class CommonServiceImpl implements CommonService {
                     redisUtil.lLeftPush(imageKey, JSONArray.toJSON(images).toString());
                     redisUtil.expire(imageKey, 1, TimeUnit.DAYS);
                 } else {
-                    return BaseRes.success("http://images.tiankong44.vip/1582887524076");
+                    return BaseRes.success(defaultImage);
                 }
+
             } else {
                 images = array.toJavaList(Image.class);
             }
