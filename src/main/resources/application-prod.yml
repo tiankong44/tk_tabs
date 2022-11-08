@@ -25,7 +25,7 @@ spring:
     password: zh34864486
   config:
     activate:
-      on-profile: home
+      on-profile: prod
   servlet:
     multipart:
       enabled: true

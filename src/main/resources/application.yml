@@ -5,7 +5,7 @@ server:
 
 spring:
   profiles:
-    active: out
+    active: prod
 
 myatis-plus:
   # 如果是放在src/main/java目录下 classpath:/com/yourpackage/*/mapper/*Mapper.xml
