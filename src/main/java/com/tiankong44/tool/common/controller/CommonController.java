@@ -1,14 +1,15 @@
 package com.tiankong44.tool.common.controller;
 
 import com.tiankong44.tool.base.entity.BaseRes;
+import com.tiankong44.tool.base.entity.CommonResultStatus;
 import com.tiankong44.tool.common.service.CommonService;
 import com.tiankong44.tool.tab.entity.Tab;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Description :
@@ -29,8 +30,16 @@ public class CommonController {
      * @return 新增结果
      */
     @PostMapping("/getBackgroundImage")
-    public BaseRes getBackgroundImage() {
-      return  commonService.getBackgroundImage();
+    public BaseRes getBackgroundImage(int clientType) {
+        return commonService.getBackgroundImage(clientType);
     }
 
+
+    /**
+     * 通用上传请求
+     */
+    @PostMapping("/uploadIcon")
+    public BaseRes uploadIcon(@RequestParam(value = "file") MultipartFile file) throws Exception {
+        return commonService.uploadIcon(file);
+    }
 }

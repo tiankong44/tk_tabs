@@ -1,6 +1,5 @@
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
     dynamic:
       primary: master # 配置默认数据库
       strict: false
@@ -21,6 +20,7 @@ spring:
       idle-timeout: 10000
       max-lifetime: 1800000
       connection-timeout: 30000
+  driver-class-name: com.mysql.cj.jdbc.Driver
   redis:
     #    cluster:
     #      nodes: 127.0.0.1:6379

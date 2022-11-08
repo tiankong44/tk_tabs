@@ -10,6 +10,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,6 +48,8 @@ public class LogAspect {
         for (int i = 0; i < args.length; i++) {
             if (args[i] instanceof String) {
                 bf.append(args[i]);
+            } else if (args[i] instanceof MultipartFile) {
+                bf.append(((MultipartFile) args[i]).getName());
             } else if (args[i] instanceof Object) {
                 bf.append(JSONObject.toJSON(args[i]).toString());
             }

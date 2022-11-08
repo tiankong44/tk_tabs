@@ -1,9 +1,16 @@
 server:
-  port: 9100
+  port: 9001
   servlet:
     context-path: /tabs
 
 spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      location: E:\upload
+      max-request-size: 50MB
+      resolve-lazily: false
   profiles:
     active: out
 
@@ -32,6 +39,7 @@ logging:
     root: info
     com.tiankong44.tool.mapper: debug
 
+#是否开启文件上传支持，默认为true。
 
 privateKey: MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAIjqo6zrMlQ9ToqeoiFP3RKcJ4Luxmcf2nVxjMGvsE9Kj1kw9JCHDE8I8Gv2CqglfbX9itSg2CvmbOuJzxm0KYjG5aPMswOVLQp1ZOJm0PXlyehQECcwqemHtsJ6K+5REkCLJ1v9vt1I6KKQBRrPIJGd1CwZp3bJYvW45fLnNB4/AgMBAAECgYA7NNwahop5CxnPr9GEfjinN4eOgxqgtZGOf8/SYdroLuHWO+lGJmAYPVFaHkd1duDptf42/Gb+dOJc6Hb6MoJS0AuWc2C6I0psv9gGqVkL9noEYQpL5Qx9KxDH3MvccBDNnrOQwHFZikd31E+FHqvVaYMs+R78wysV0kc/CEqbwQJBAPHpDmI65J/QJUWTyVip3b98Z9tXXPM4TZb8HDW9aUjL9rAQ7G600wQY2qmSa1z1TVpb5+odMSgsE7/G4VaDL8cCQQCQ5Blq+4WTOLChHzGvc5yLRpMb4jCJm6XFv+89tqpbqFZcuJFqPLdiQCuqHL+41f4nbO8y79ws1RlHqgXmBY3JAkBD9H4P5g9XPXda5jsHZyBdrCrYmOAJiuVw5n1eM0kiI/m2V+qy5qToX7r9K55xTI9gNLUfNPgcGtWpZ8rhLJT9AkA7GiBYKGMzS4OZJa1RwVoQ4efuDtT3vNrhEErZpKJXIxKfXdZLPJsdY8mr6XA3SGsUz/W+lGL+kqpuNieTzZ4pAkEAgtabJTIQQ9B2GsU11gfzwvZU62pH/3LjQPyVQnkgyWNtiNQ7eVayPoeeRozV1czOw2QkDXuq4bH3SxHPSwFYfw==
 publicKey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCI6qOs6zJUPU6KnqIhT90SnCeC7sZnH9p1cYzBr7BPSo9ZMPSQhwxPCPBr9gqoJX21/YrUoNgr5mzric8ZtCmIxuWjzLMDlS0KdWTiZtD15cnoUBAnMKnph7bCeivuURJAiydb/b7dSOiikAUazyCRndQsGad2yWL1uOXy5zQePwIDAQAB

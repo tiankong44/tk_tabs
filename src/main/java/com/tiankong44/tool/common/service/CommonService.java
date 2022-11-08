@@ -1,6 +1,7 @@
 package com.tiankong44.tool.common.service;
 
 import com.tiankong44.tool.base.entity.BaseRes;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
 
@@ -10,5 +11,7 @@ import com.tiankong44.tool.base.entity.BaseRes;
  **/
 public interface CommonService {
 
-    BaseRes getBackgroundImage();
+    BaseRes getBackgroundImage(int clientType);
+
+    BaseRes uploadIcon(MultipartFile file);
 }
