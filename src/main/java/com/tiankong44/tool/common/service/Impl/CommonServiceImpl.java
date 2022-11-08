@@ -114,7 +114,8 @@ public class CommonServiceImpl implements CommonService {
                     fos.write(uploadFile.getBytes());
                     fos.flush();
                     fos.close();
-                    return BaseRes.success(fileAll);
+                    String relativePath = "/images/" + year + "/" + month + "/" + fileName;
+                    return BaseRes.success(relativePath);
                 } catch (Exception e) {
                     e.printStackTrace();
                     return BaseRes.failure("上传文件异常");

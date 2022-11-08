@@ -30,4 +30,10 @@ spring:
   config:
     activate:
       on-profile: out
-
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      location: E:\upload
+      max-request-size: 50MB
+      resolve-lazily: false

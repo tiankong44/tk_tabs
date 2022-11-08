@@ -1,15 +1,11 @@
 package com.tiankong44.tool.common.controller;
 
 import com.tiankong44.tool.base.entity.BaseRes;
-import com.tiankong44.tool.base.entity.CommonResultStatus;
 import com.tiankong44.tool.common.service.CommonService;
-import com.tiankong44.tool.tab.entity.Tab;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @Description :
@@ -18,6 +14,7 @@ import java.util.Map;
  **/
 @RestController
 @RequestMapping("common")
+@CrossOrigin
 public class CommonController {
 
 

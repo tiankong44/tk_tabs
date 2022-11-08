@@ -1,7 +1,14 @@
 package com.tiankong44.tool.app.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.tiankong44.tool.app.entity.App;
 import com.tiankong44.tool.app.service.AppService;
+import com.tiankong44.tool.base.entity.BaseRes;
+import com.tiankong44.tool.mapper.slave.AppMapper;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (App)表服务实现类
@@ -10,7 +17,16 @@ import org.springframework.stereotype.Service;
  * @since 2022-11-01 15:15:33
  */
 @Service("appService")
-public class AppServiceImpl  implements AppService {
+public class AppServiceImpl implements AppService {
 
+
+    @Resource
+    AppMapper appMapper;
+
+    @Override
+    public BaseRes getAppList() {
+        List<App> list = appMapper.selectList(new QueryWrapper());
+        return BaseRes.success(list);
+    }
 }
 

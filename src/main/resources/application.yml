@@ -4,13 +4,6 @@ server:
     context-path: /tabs
 
 spring:
-  servlet:
-    multipart:
-      enabled: true
-      max-file-size: 10MB
-      location: E:\upload
-      max-request-size: 50MB
-      resolve-lazily: false
   profiles:
     active: out
 

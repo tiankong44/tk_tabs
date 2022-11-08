@@ -2,6 +2,7 @@ package com.tiankong44.tool.app.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.tiankong44.tool.app.entity.App;
+import com.tiankong44.tool.base.entity.BaseRes;
 
 /**
  * (App)表服务接口
@@ -11,5 +12,6 @@ import com.tiankong44.tool.app.entity.App;
  */
 public interface AppService {
 
+    BaseRes getAppList();
 }
 
