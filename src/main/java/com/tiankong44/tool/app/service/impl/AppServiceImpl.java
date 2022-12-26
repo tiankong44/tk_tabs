@@ -25,7 +25,9 @@ public class AppServiceImpl implements AppService {
 
     @Override
     public BaseRes getAppList() {
-        List<App> list = appMapper.selectList(new QueryWrapper());
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.orderBy(true, true, "name");
+        List<App> list = appMapper.selectList(queryWrapper);
         return BaseRes.success(list);
     }
 }
