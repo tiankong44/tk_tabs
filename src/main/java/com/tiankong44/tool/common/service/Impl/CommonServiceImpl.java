@@ -40,7 +40,8 @@ public class CommonServiceImpl implements CommonService {
     @Resource
     AppearanceMapper appearanceMapper;
 
-
+    @Value("images-url-prefix")
+    String imagesUrlPrefix;
     @Value("${spring.servlet.multipart.location}")
     String uploadPath;
     private static String defaultImage = "https://cn.bing.com/th?id=OHR.BridgeofSighs_ZH-CN5414607871_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp";  // 图片地址前缀
@@ -87,7 +88,7 @@ public class CommonServiceImpl implements CommonService {
             String fileAllName = uploadFile.getOriginalFilename();
             if (!StrUtil.isEmpty(fileAllName)) {
                 String suffix = fileAllName.substring(fileAllName.lastIndexOf("."));
-                String fileName = StrUtil.uuid() + suffix;
+                String fileName = StrUtil.uuid().replaceAll("-", "") + suffix;
                 long fileSize = uploadFile.getSize();
                 if (fileSize > 1024 * 1024 * 10) {
                     return BaseRes.failure("图片大小在50M以内!");
@@ -114,7 +115,7 @@ public class CommonServiceImpl implements CommonService {
                     fos.write(uploadFile.getBytes());
                     fos.flush();
                     fos.close();
-                    String relativePath = "/images/" + year + "/" + month + "/" + fileName;
+                    String relativePath = imagesUrlPrefix + year + "/" + month + "/" + fileName;
                     return BaseRes.success(relativePath);
                 } catch (Exception e) {
                     e.printStackTrace();

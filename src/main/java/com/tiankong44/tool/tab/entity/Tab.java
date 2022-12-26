@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * (Tab)表实体类
  *
@@ -22,10 +24,13 @@ public class Tab extends Model<Tab> {
     @TableId(type = IdType.AUTO)
     private Long id;
     //名称
+    @NotNull(message = "应用名称不能为空")
     private String name;
     //内部链接
+    @NotNull(message = "内部链接不能为空")
     private String insideUrl;
     //外部链接
+    @NotNull(message = "外部链接不能为空")
     private String externalUrl;
     //十六进制颜色-背景
     private String hex;
@@ -35,7 +40,8 @@ public class Tab extends Model<Tab> {
     private boolean individual;
     //排序
     private Integer sort;
-    //是否私密
+    //图标地址
+    @NotNull(message = "图标地址不能为空")
     private String icon;
 }
 

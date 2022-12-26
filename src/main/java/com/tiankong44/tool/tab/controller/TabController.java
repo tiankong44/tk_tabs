@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 
 /**
@@ -34,8 +35,8 @@ public class TabController {
      * @param tab 实体对象
      * @return 新增结果
      */
-    @PostMapping("/insert")
-    public BaseRes insert(@RequestBody Tab tab) {
+    @PostMapping("/addTab")
+    public BaseRes insert(@RequestBody @Valid Tab tab) {
         return tabService.addTab(tab);
     }
 
