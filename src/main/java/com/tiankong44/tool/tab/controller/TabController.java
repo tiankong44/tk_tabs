@@ -52,14 +52,24 @@ public class TabController {
     }
 
     /**
-     * 新增数据
+     * 查询私密标签栏
      *
-     * @param Page 实体对象
+     * @param page 实体对象
      * @return 新增结果
      */
     @PostMapping("/listPrivate")
-    public BaseRes listPrivate(@RequestBody Page<Tab> Page, String password) {
-        return tabService.listPrivate(Page, password);
+    public BaseRes listPrivate(@RequestBody Page<Tab> page, String token) {
+        return tabService.listPrivate(page, token);
+    }
+
+    /**
+     * 确认密码
+     *
+     * @return 新增结果
+     */
+    @PostMapping("/confirmPassword")
+    public BaseRes confirmPassword(String password) {
+        return tabService.confirmPassword(password);
     }
 }
 

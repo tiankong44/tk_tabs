@@ -1,5 +1,6 @@
 package com.tiankong44.tool.aop;
 
+import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.tiankong44.tool.base.entity.BaseRes;
 import lombok.extern.slf4j.Slf4j;
@@ -10,11 +11,15 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpUtils;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 /**
  * @Description :日志切面，记录接口出参入参
@@ -39,6 +44,15 @@ public class LogAspect {
         if (!(signature instanceof MethodSignature)) {
             throw new IllegalArgumentException("该注解只能用于方法");
         }
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (attributes != null) {
+            HttpServletRequest request = attributes.getRequest();
+            log.info(" 请求地址: {}", request.getRequestURL().toString());
+            String ip = request.getRemoteAddr();
+            log.info(" 请求IP: {}", ip);
+
+        }
+
         methodSignature = (MethodSignature) signature;
         Object o = joinPoint.getTarget();//获取连接点所在的目标对象
         Object[] args = joinPoint.getArgs();//获取参数
@@ -56,7 +70,6 @@ public class LogAspect {
         }
         log.info(bf.toString());
         Object retObj = null;
-
         retObj = joinPoint.proceed(args);//通过反射的方法执行切面切到的方法实体,如果有传参则不使用原来的参数进行方法,如果不调用此方法，那被切的面后面的代码不会被执行
         if (retObj != null && retObj instanceof String) {
             StringBuilder retStr = new StringBuilder(funcName + "方法回参：").append(retObj);
