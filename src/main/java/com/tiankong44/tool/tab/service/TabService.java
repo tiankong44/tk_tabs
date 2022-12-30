@@ -17,8 +17,10 @@ public interface TabService {
 
     BaseRes listPublic(Page<Tab> page);
 
-    BaseRes listPrivate(Page<Tab> page, String token);
+    BaseRes listPrivate(String msg);
 
     BaseRes confirmPassword(String password);
+
+    BaseRes getPublicKey();
 }
 

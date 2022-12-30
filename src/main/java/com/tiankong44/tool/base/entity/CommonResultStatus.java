@@ -13,7 +13,7 @@ public enum CommonResultStatus implements ResultStatus{
     NO_POWER(1003,"无权访问"),
     NO_AUTHORITY(1004,"无操作权限"),
     NO_PASSWORD(1005,"未设置密码"),
-    TOKEN_TIMEOUT(1005,"token过期！请清除缓存后重新进入！"),
+    TOKEN_TIMEOUT(1006,"token过期！请清除缓存后重新进入！"),
     ;
 
     private int code;

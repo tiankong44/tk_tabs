@@ -5,10 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tiankong44.tool.base.entity.BaseRes;
 import com.tiankong44.tool.tab.entity.Tab;
 import com.tiankong44.tool.tab.service.TabService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -58,8 +55,19 @@ public class TabController {
      * @return 新增结果
      */
     @PostMapping("/listPrivate")
-    public BaseRes listPrivate(@RequestBody Page<Tab> page, String token) {
-        return tabService.listPrivate(page, token);
+    public BaseRes listPrivate(@RequestBody String msg) {
+
+        return tabService.listPrivate(msg);
+    }
+
+    /**
+     * 确认密码
+     *
+     * @return 新增结果
+     */
+    @PostMapping("/getPublicKey")
+    public BaseRes getPublicKey() {
+        return tabService.getPublicKey();
     }
 
     /**
@@ -68,7 +76,7 @@ public class TabController {
      * @return 新增结果
      */
     @PostMapping("/confirmPassword")
-    public BaseRes confirmPassword(String password) {
+    public BaseRes confirmPassword(@RequestBody String password) {
         return tabService.confirmPassword(password);
     }
 }

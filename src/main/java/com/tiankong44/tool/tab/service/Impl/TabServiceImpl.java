@@ -7,6 +7,7 @@ import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
 import cn.hutool.crypto.asymmetric.Sign;
 import cn.hutool.crypto.asymmetric.SignAlgorithm;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -70,21 +71,27 @@ public class TabServiceImpl implements TabService {
 
     @Override
     @DS("slave")
-    public BaseRes listPrivate(Page<Tab> page, String token) {
+    public BaseRes listPrivate(String msg) {
+        JSONObject request = JSONObject.parseObject(msg);
+        Page<Tab> page = request.getJSONObject("page").toJavaObject(Page.class);
+        String token = request.getString("lockToken");
         if (StringUtils.isEmpty(token)) {
             return BaseRes.failure("请输入密码进入！");
         }
         String redisToken = redisUtil.get(tokenKey);
         if (StringUtils.isEmpty(redisToken)) {
-            return BaseRes.failure(CommonResultStatus.TOKEN_TIMEOUT, CommonResultStatus.TOKEN_TIMEOUT.getMessage());
+            return BaseRes.failure(CommonResultStatus.TOKEN_TIMEOUT);
         }
+        redisUtil.expire(tokenKey, 5, TimeUnit.MINUTES); //每次刷新更新5分钟有效期
         if (token.equals(redisToken)) {
             QueryWrapper<Tab> wrapper = new QueryWrapper<Tab>();
             wrapper.eq("individual", true).orderBy(true, true, "sort");
             page = tabMapper.selectPage(page, wrapper);
+
+            // redisUtil.delete(tokenKey);
             return BaseRes.success(page);
         } else {
-            return BaseRes.failure(CommonResultStatus.TOKEN_TIMEOUT, CommonResultStatus.TOKEN_TIMEOUT.getMessage());
+            return BaseRes.failure(CommonResultStatus.TOKEN_TIMEOUT);
         }
 
         /**
@@ -94,11 +101,22 @@ public class TabServiceImpl implements TabService {
 
     }
 
+
+    @Override
+    public BaseRes getPublicKey() {
+        if (StringUtils.isEmpty(publicKey)) {
+            return BaseRes.failure(CommonResultStatus.NOK);
+        } else {
+            return BaseRes.success(publicKey);
+        }
+
+    }
+
     @Override
     @DS("slave")
     public BaseRes confirmPassword(String password) {
         if (StringUtils.isEmpty(password)) {
-            return   BaseRes.failure("密码不能为空");
+            return BaseRes.failure("密码不能为空");
         }
         /**
          *  对比密码
@@ -106,10 +124,11 @@ public class TabServiceImpl implements TabService {
          */
         String encodePassword = systemMapper.getPassword();
         if (StringUtils.isEmpty(encodePassword)) {
-            return BaseRes.failure(CommonResultStatus.NO_PASSWORD, CommonResultStatus.NO_PASSWORD.getMessage());
+            return BaseRes.failure(CommonResultStatus.NO_PASSWORD);
         }
-        String decode = RsaUtil.decode(encodePassword, privateKey);
-        if (password.equals(decode)) {
+        String decode = RsaUtil.decode(password, privateKey);
+        String decodePassword = RsaUtil.decode(encodePassword, privateKey);
+        if (decode.equals(decodePassword)) {
             String token = StrUtil.uuid().replaceAll("-", "");
             redisUtil.setEx(tokenKey, token, 5, TimeUnit.MINUTES);
             return BaseRes.success(token);
