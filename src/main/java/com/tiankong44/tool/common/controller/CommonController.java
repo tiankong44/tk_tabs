@@ -39,4 +39,12 @@ public class CommonController {
     public BaseRes uploadIcon(@RequestParam(value = "file") MultipartFile file) throws Exception {
         return commonService.uploadIcon(file);
     }
+
+    /**
+     * 通用上传请求
+     */
+    @PostMapping("/getSettingData")
+    public BaseRes getSettingData() {
+        return commonService.getSettingData();
+    }
 }

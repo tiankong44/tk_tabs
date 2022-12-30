@@ -14,4 +14,6 @@ public interface CommonService {
     BaseRes getBackgroundImage(int clientType);
 
     BaseRes uploadIcon(MultipartFile file);
+
+    BaseRes getSettingData();
 }

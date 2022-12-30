@@ -5,6 +5,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.tiankong44.tool.base.entity.BaseRes;
 import com.tiankong44.tool.common.entity.Appearance;
 import com.tiankong44.tool.common.entity.ClientEnum;
@@ -40,7 +41,7 @@ public class CommonServiceImpl implements CommonService {
     @Resource
     AppearanceMapper appearanceMapper;
 
-    @Value("images-url-prefix")
+    @Value("${images-url-prefix}")
     String imagesUrlPrefix;
     @Value("${spring.servlet.multipart.location}")
     String uploadPath;
@@ -130,4 +131,16 @@ public class CommonServiceImpl implements CommonService {
         return BaseRes.success();
     }
 
+    @Override
+    public BaseRes getSettingData() {
+        JSONObject resObject = new JSONObject();
+        /**
+         *  基础设置
+         */
+
+        Appearance appearance = appearanceMapper.selectById(1);
+        resObject.put("base", appearance);
+
+        return BaseRes.success(resObject);
+    }
 }
